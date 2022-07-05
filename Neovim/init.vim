@@ -10,7 +10,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Tagbar 코드 뷰어 창
-" Plug 'majutsushi/tagbar'
 Plug 'preservim/tagbar'
 
 " NERDTree 코드 뷰어 창
@@ -30,9 +29,6 @@ Plug 'ronakg/quickr-cscope.vim'
 
 " CtrlP 파일 탐색 플러그인
 Plug 'ctrlpvim/ctrlp.vim'
-
-" 비활성 윈도우 강조
-" Plug 'blueyed/vim-diminactive'
 
 " vim cutlass 잘라내기 명령어가 yank 에 영향을 주지 않음
 Plug 'svermeulen/vim-cutlass'
@@ -73,9 +69,8 @@ nnoremap <silent><C-k> :tabnext<CR>
 nnoremap <silent><C-h> :bp<CR>
 nnoremap <silent><C-l> :bn<CR>
 
-" <Shift + h, l> 를 눌러서 현재 버퍼 삭제
-nnoremap <silent><S-h> :bp<bar>sp<bar>bn<bar>bd<CR>
-nnoremap <silent><S-l> :bp<bar>sp<bar>bn<bar>bd<CR>
+" <Shift + w> 를 눌러서 현재 버퍼 삭제
+nnoremap <silent><S-w> :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " <Ctrl + w> t 를 눌러서 커서를 NERDTree 로 옮기기
 nnoremap <silent><C-w>t :NERDTreeFocus<CR>
@@ -117,6 +112,8 @@ set tabstop=8
 " 쉬프트 (<< 혹은 >>) 이동거리 8 칸
 set shiftwidth=8
 
+set hidden
+
 " 줄 번호를 표시한다.
 set number
 
@@ -134,7 +131,7 @@ set hlsearch
 set showtabline=2
 
 " 행 표시선 출력
-set colorcolumn=80
+set colorcolumn=81
 
 if has('nvim')			" nvim 을 사용 중이라면
 	set inccommand=nosplit	" nvim live %s substitute (실시간 강조)
@@ -183,9 +180,12 @@ highlight ColorColumn guibg=White
 " =========================================================================
 " tabsize 를 size 로 변경
 function SetTab(size)
+	echo "change SetTab"
 	execute "set shiftwidth=".a:size
 	execute "set tabstop=".a:size
 	execute "set softtabstop=".a:size
+	set smartindent
+	set noexpandtab
 endfunction
 " =========================================================================
 " =  자동 실행 (autocmd)                                                  =
@@ -217,6 +217,11 @@ autocmd BufEnter * if (&filetype == 'c' || &filetype == 'cpp')
 autocmd BufLeave * if (&filetype == 'c' || &filetype == 'cpp')
 	\| set nonumber
 \| endif
+
+" 파일에 따른 vim 의 indentation 수정을 금지함
+filetype plugin indent off
+" python 형식의 파일을 열 때 Tabsize 를 4 로 변경
+autocmd FileType python call SetTab(4)
 " =========================================================================
 " =  플러그인 설정                                                        =
 " =========================================================================
@@ -231,9 +236,9 @@ endif
 
 " <Tab> 을 눌러서 현재 지시자를 옮김.
 " inoremap <silent><expr> <TAB>
-      "\ pumvisible() ? "\<C-n>" :
-      "\ <SID>check_back_space() ? "\<TAB>" :
-      "\ coc#refresh()
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ coc#refresh()
 "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " <Backspace> 키가 지시자 제거, 기존 자동완성 양식 폐기
@@ -251,9 +256,36 @@ endif
 
 " 코드 탐색 단축키
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gd <Plug>(coc-definition)
+
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+	if CocAction('hasProvider', 'hover')
+		call CocActionAsync('doHover')
+	else
+		call feedkeys('K', 'in')
+	endif
+endfunction
+
+augroup mygroup
+	autocmd!
+	" Setup formatexpr specified filetype(s).
+	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+	" Update signature help on jump placeholder.
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
 " 커서 아래의 토큰을 강조
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+highlight link CocFloating markdown
 " ------------------------------------
 " nvim-treesitter 설정
 " ------------------------------------
