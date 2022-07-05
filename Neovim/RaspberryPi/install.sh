@@ -12,3 +12,4 @@ curl -sL install-node.now.sh/lts | sudo $SHELL -s -- --yes
 nvim +:PlugInstall +:qa
 nvim +:CocInstall coc-clangd +:qa
 nvim +:CocCommand clangd.install +:qa
+nvim +:TSUpdateSync +:qa
