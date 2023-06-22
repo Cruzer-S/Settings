@@ -6,3 +6,5 @@ sudo dnf remove -y gnome-tour
 echo "alias cat='bat'" >> ~/.bashrc
 
 source ~/.bashrc
+
+./gsettings.sh
