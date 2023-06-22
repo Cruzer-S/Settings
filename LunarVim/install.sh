@@ -21,3 +21,7 @@ git clone https://github.com/ronniedroid/getnf.git
 echo -e "40\n" | ./getnf/getnf
 rm -rf ./getnf
 fc-cache -f -v
+
+# FTPlugin Settings
+mkdir -p ~/.config/lvim/
+cp -r ./ftplugin/ ~/.config/lvim
