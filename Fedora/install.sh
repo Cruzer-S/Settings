@@ -2,9 +2,9 @@
 sudo dnf install -y gh bat google-chrome-stable
 sudo dnf install -y gnome-extensions gnome-tweaks
 sudo dnf remove -y gnome-tour
+sudo dnf install -y trash-cli
 
-echo "alias cat='bat'" >> ~/.bashrc
-
+cat bashrc >> ~/.bashrc
 source ~/.bashrc
 
 ./gsettings.sh

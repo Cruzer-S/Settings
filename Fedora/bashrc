@@ -1,0 +1,5 @@
+alias cat="bat"
+
+alias rm="trash-rm"
+alias rs="trash-restore"
+alias rl="trash-list"
