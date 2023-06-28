@@ -1,5 +1,5 @@
 alias cat="bat"
 
-alias rm="trash-rm"
+alias rm="trash-put"
 alias rs="trash-restore"
 alias rl="trash-list"
