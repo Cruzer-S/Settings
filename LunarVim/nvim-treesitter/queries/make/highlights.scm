@@ -1,5 +1,0 @@
-[
- "define"
- "endef"
- "vpath"
- ] @keyword
