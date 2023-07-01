@@ -25,3 +25,6 @@ fc-cache -f -v
 # FTPlugin Settings
 mkdir -p ~/.config/lvim/
 cp -r ./ftplugin/ ~/.config/lvim
+
+# Additional configuration
+cat ./nvim-treesitter/queries/make/highlights.scm >> ~/.local/share/lunarvim/site/pack/lazy/opt/nvim-treesitter/queries/make/highlights.scm
