@@ -14,7 +14,7 @@ lvim.keys.normal_mode["<S-l>"] = ":bnext<CR>"
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
-
+vim.opt.colorcolumn = '80'
 --------------------------------------------------------------
 -- telescope settings
 --------------------------------------------------------------
