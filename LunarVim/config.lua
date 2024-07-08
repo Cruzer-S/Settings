@@ -15,6 +15,42 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 vim.opt.colorcolumn = '80'
+vim.opt.mouse = ''
+
+-- folding powered by treesitter
+-- https://github.com/nvim-treesitter/nvim-treesitter#folding
+-- look for foldenable: https://github.com/neovim/neovim/blob/master/src/nvim/options.lua
+-- Vim cheatsheet, look for folds keys: https://devhints.io/vim
+vim.opt.foldmethod = "expr" -- default is "normal"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- default is ""
+vim.opt.foldenable = false -- if this option is true and fold method option is other than normal, every time a document is opened everything will be folded.
+
+lvim.builtin.which_key.setup.plugins.presets.z = true
+
+lvim.builtin.nvimtree.setup.view.width = 30
+
+lvim.plugins = {
+	{
+		"hedyhli/outline.nvim",
+		config = function()
+			require("outline").setup {
+				outline_window  = {
+					split_command = 'split',
+					relative_width = false,
+					width = lvim.builtin.nvimtree.setup.view.width,
+				},
+				symbols = {
+					icons = {
+						String = { icon = 'S', hl = 'String' },
+						Object = { icon = 'O', hl = 'Type' },
+					}
+				}
+			}
+	  end,
+	},
+}
+
+lvim.keys.normal_mode["<Leader>r"] = "<Cmd>NvimTreeToggle<CR><Cmd>Outline<CR>"
 --------------------------------------------------------------
 -- telescope settings
 --------------------------------------------------------------
