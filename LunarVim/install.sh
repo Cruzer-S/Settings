@@ -1,12 +1,14 @@
 #!/bin/bash
 
+PWD=$(dirname $0)
+
 # Install prerequisites
 sudo dnf install -y neovim git make python npm nodejs cargo
 sudo dnf install -y gcc g++
 
 # Install LunarVim
 echo -e "\n\n\n" | LV_BRANCH='release-1.4/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.4/neovim-0.9/utils/installer/install.sh)
-cp ./config.lua ~/.config/lvim/config.lua
+cp $PWD/config.lua ~/.config/lvim/config.lua
 
 # Add shortcut
 echo "alias vi='lvim'" >> ~/.bashrc
@@ -23,7 +25,7 @@ fc-cache -f -v
 
 # FTPlugin Settings
 mkdir -p ~/.config/lvim/
-cp -r ./ftplugin/ ~/.config/lvim
+cp -r $PWD/ftplugin/ ~/.config/lvim
 
 # Additional configuration
-rm -rf ~/.local/share/lunarvim/site/pack/lazy/opt/nvim-treesitter/queries/make
+# rm -rf ~/.local/share/lunarvim/site/pack/lazy/opt/nvim-treesitter/queries/make
