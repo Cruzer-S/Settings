@@ -50,7 +50,7 @@ if [ $1 = "install" ]; then
 
 	popd
 
-	rm -rf $DIR
+	rm -rf $DIR ~/.m2/ ~/.subversion/
 
 	exit 0
 fi
