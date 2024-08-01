@@ -1,4 +1,5 @@
 #!/bin/bash
+
 SESSION="minecraft"
 
 MINRAM=1024M
@@ -22,6 +23,9 @@ if [[ $UID != 0 ]]; then
 fi
 
 if [ $1 = "install" ]; then
+	echo "Install prerequisite packages"
+	dnf install java java-latest-openjdk java-latest-openjdk-devel -y --quiet
+
 	if [ -z "$2" ]; then
 		echo "Download latest version of Spigot"
 		VERSION="latest"
@@ -30,27 +34,40 @@ if [ $1 = "install" ]; then
 		VERSION=$2
 	fi
 
-	dnf install java-latest-openjdk java-latest-openjdk-devel -y
-
-	DIR=$(mktemp -d)
+	DIR=$(sudo -u $SUDO_USER mktemp -d)
 	OUTPUT=$(pwd)/$SERVER
+	UHOME=$(eval echo ~$SUDO_USER)
 
-	pushd $DIR
+	pushd $DIR > /dev/null
 
-	wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+	sudo -u $SUDO_USER wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar --quiet
 	if [ ! -f BuildTools.jar ]; then
 		echo "Failed to download BuildTools.jar"
 		exit 1
 	fi
 
-	echo "Build $SERVER file..."
-	java -jar BuildTools.jar --rev $VERSION --final-name spigot.jar > /dev/null
+	if [ -d $UHOME/.m2/ ]; then
+		echo "Backup .m2 directory"
+		mv $UHOME/.m2/ $UHOME/.m2_backup/
+	fi
+
+	echo "Build $SERVER file (It takes a long time)..."
+	sudo -u $SUDO_USER java -jar BuildTools.jar --rev $VERSION --final-name spigot.jar > /dev/null 2>&1
 	mv spigot.jar $OUTPUT
+	mkdir -p $UHOME/.m2/
 	echo "Done!"
 
-	popd
+	popd > /dev/null
 
-	rm -rf $DIR ~/.m2/ ~/.subversion/
+	echo "Cleanup"
+	rm -r $DIR $UHOME/.m2/
+
+	if [ -d $UHOME/.m2_backup/ ]; then
+		echo "Restore .m2 directory"
+		mv $UHOME/.m2_backup/
+	fi
+
+	echo "output: $OUTPUT"
 
 	exit 0
 fi
