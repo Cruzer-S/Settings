@@ -9,7 +9,7 @@ SERVER="server.jar"
 
 USAGE="usage: $0 <command>
 
-commands: install, start, stop, open"
+commands: install, start, stop, open, restart"
 
 if [ $# -eq 0 ]; then
 	echo "$USAGE"
@@ -94,6 +94,12 @@ elif [ $1 = "stop" ]; then
 	fi
 elif [ $1 = "open" ]; then
 	screen -r $SESSION
+elif [ $1 = "restart" ]; then
+	echo "stop minecraft server."
+	screen -S $SESSION -p 0 -X stuff "stop\r"
+	sleep 10
+	echo "restart minecraft server."
+	screen -dmS $SESSION java -Xms$MINRAM -Xmx$MAXRAM -jar server.jar nogui
 else
 	echo $USAGE
 fi
