@@ -3,3 +3,5 @@ alias cat="bat"
 alias rm="trash-put"
 alias rs="trash-restore"
 alias rl="trash-list"
+
+alias get-mk="wget https://raw.githubusercontent.com/Cruzer-S/generic-makefile/main/makefile"
