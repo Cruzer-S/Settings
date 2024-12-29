@@ -7,8 +7,9 @@ set imap_check_subscribed
 set spoolfile = "imaps://imap.gmail.com/INBOX"
 set folder = "imaps://imap.gmail.com/"
 set mbox = "imaps://imap.gmail.com/All Mail"
-set record = "imaps://imap.gmail.com/Sent Mail"
+set record = "imaps://imap.gmail.com/Sent"
 set postponed = "imaps://imap.gmail.com/Drafts"
+set trash = "imaps://imap.gmail.com/[Gmail]/Trash" 
 
 set header_cache = "~/.mutt/cache/headers"
 set message_cachedir = "~/.mutt/cache/bodies"
@@ -32,7 +33,8 @@ set sort = threads
 set sort_browser = date
 set sort_aux = reverse-date-received
 
-unset help
+set move = no
+set help = no
 
 set mailcap_path = ~/.mutt/mailcap
 
