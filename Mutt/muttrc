@@ -1,0 +1,57 @@
+################### IMAP ###################
+set imap_user = <email>
+set imap_pass = <password>
+
+set imap_check_subscribed
+
+set spoolfile = "imaps://imap.gmail.com/INBOX"
+set folder = "imaps://imap.gmail.com/"
+set mbox = "imaps://imap.gmail.com/All Mail"
+set record = "imaps://imap.gmail.com/Sent Mail"
+set postponed = "imaps://imap.gmail.com/Drafts"
+
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+set certificate_file = "~/.mutt/certificates"
+
+################### SMTP ###################
+set smtp_url = "smtp://<email-name>@smtp.gmail.com:587/"
+set smtp_pass = $imap_pass
+set ssl_force_tls
+
+################### OTHR ###################
+set editor = "lvim"
+set edit_headers = yes
+set charset = UTF-8
+
+set realname = <name>
+set from = <mail-address>
+set use_from = yes
+
+set sort = threads
+set sort_browser = date
+set sort_aux = reverse-date-received
+
+unset help
+
+################### REND ###################
+auto_view text/html
+alternative_order text/plain text/hmtl
+
+################### KEYS ###################
+bind index				g		first-entry
+bind index				G		last-entry
+bind index				\Cd		next-page
+bind index				\Cu		previous-page
+
+bind index,pager		E		sidebar-toggle-visible
+bind index				J		sidebar-next
+bind index				K		sidebar-prev
+bind index				O		sidebar-open
+
+bind pager				g		top
+bind pager				G		bottom
+bind pager				\Cd		next-page
+bind pager				\Cu		previous-page
+
+macro index				,s		"| git am -s\n" "git am single patch"
