@@ -1,5 +1,5 @@
 ################### IMAP ###################
-set imap_user = <email>
+set imap_user = "yyyynoom@gmail.com"
 set imap_pass = <password>
 
 set imap_check_subscribed
@@ -15,7 +15,7 @@ set message_cachedir = "~/.mutt/cache/bodies"
 set certificate_file = "~/.mutt/certificates"
 
 ################### SMTP ###################
-set smtp_url = "smtp://<email-name>@smtp.gmail.com:587/"
+set smtp_url = "smtp://yyyynoom@smtp.gmail.com:587/"
 set smtp_pass = $imap_pass
 set ssl_force_tls
 
@@ -24,8 +24,8 @@ set editor = "lvim"
 set edit_headers = yes
 set charset = UTF-8
 
-set realname = <name>
-set from = <mail-address>
+set realname = "Moon Yeounsu"
+set from = "yyyynoom@gmail.com"
 set use_from = yes
 
 set sort = threads
@@ -34,9 +34,18 @@ set sort_aux = reverse-date-received
 
 unset help
 
+set mailcap_path = ~/.mutt/mailcap
+
+source ~/.mutt/mutt-colors-solarized-dark-16.muttrc
+source ~/.mutt/mutt-patch-highlighting.muttrc
+# from https://github.com/jessfraz/dockerfiles/tree/master/mutt/.mutt
+
 ################### REND ###################
-auto_view text/html
 alternative_order text/plain text/hmtl
+
+auto_view text/html
+auto_view text/x-patch
+auto_view text/x-diff
 
 ################### KEYS ###################
 bind index				g		first-entry
@@ -51,6 +60,8 @@ bind index				O		sidebar-open
 
 bind pager				g		top
 bind pager				G		bottom
+bind pager				j		next-line
+bind pager				k		previous-line
 bind pager				\Cd		next-page
 bind pager				\Cu		previous-page
 
