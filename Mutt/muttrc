@@ -36,8 +36,8 @@ unset help
 
 set mailcap_path = ~/.mutt/mailcap
 
-source ~/.mutt/mutt-colors-solarized-dark-16.muttrc
-source ~/.mutt/mutt-patch-highlighting.muttrc
+source ~/.mutt/solarized-dark-16.muttrc
+source ~/.mutt/patch-highlighting.muttrc
 # from https://github.com/jessfraz/dockerfiles/tree/master/mutt/.mutt
 
 ################### REND ###################
