@@ -1,13 +1,7 @@
-# Patch syntax highlighting
-#color   normal  white           default
-color   body    brightwhite     default         ^[[:space:]].*
-color   body    yellow          default         ^(diff).*
-#color   body    white           default         ^[\-\-\-].*
-#color   body    white           default         ^[\+\+\+].*
-#color   body    green           default         ^[\+].*
-#color   body    red             default         ^[\-].*
-#color   body    brightblue      default         [@@].*
-color   body    brightwhite     default         ^(\s).*
+# Patch syntax highlighting                                                     
+color   body    brightwhite     default         ^[[:space:]].*                  
+color   body    yellow          default         ^(diff).*                       
+color   body    brightwhite     default         ^(\s).*                         
 color   body    cyan            default         ^(Signed-off-by).*
 color   body    cyan            default         ^(Docker-DCO-1.1-Signed-off-by).*
 color   body    brightwhite     default         ^(Cc)
