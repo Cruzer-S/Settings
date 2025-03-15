@@ -16,13 +16,20 @@ if (( $# <= 0 )); then
 		set-filter <target>
 		get-filter
 
+		set-pid <pid>
+		get-pid <pid>
+
 		list-option
 		set-option <option> <value>
 		get-option <option>
 
 		result
 	"
+
+	exit
 fi
+
+TARGET=$(cat $FTRACE/current_tracer)
 
 case $1 in
 	"on")
@@ -52,20 +59,27 @@ case $1 in
 	;;
 
 	"list-filter")
-		TARGET=$(cat $FTRACE/current_tracer)
 		case $TARGET in
 			"function" | "function_graph")	cat $FTRACE/available_filter_functions	;;
-			"event")			cat $FTRACE/available_filter_events	;;
+			"nop")				cat $FTRACE/available_events		;;
 			*)				echo "no filter provided for $TARGET"	;;
 		esac
 	;;
 
 	"set-filter")
-		echo $2 > $FTRACE/set_ftrace_filter
+		if [[ $TARGET == "nop" ]]; then
+			echo $2 > $FTRACE/set_event
+		else
+			echo $2 > $FTRACE/set_ftrace_filter
+		fi
 	;;
 
 	"get-filter")
-		cat $FTRACE/set_ftrace_filter
+		if [[ $TARGET == "nop" ]]; then
+			cat $FTRACE/set_event
+		else
+			cat $FTRACE/set_ftrace_filter
+		fi
 	;;
 
 	"list-option")
@@ -79,6 +93,23 @@ case $1 in
 	"get-option")
 		cat $FTRACE/options/$2
 	;;
+
+	"set-pid")
+		if [[ $TARGET == "nop" ]]; then
+			echo $2 > $FTRACE/set_event_pid
+		else
+			echo $2 > $FTRACE/set_ftrace_pid
+		fi
+	;;
+
+	"get-pid")
+		if [[ $TARGET == "nop" ]]; then
+			cat $FTRACE/set_event_pid
+		else
+			cat $FTRACE/set_ftrace_pid
+		fi
+	;;
+
 
 	"result")
 		cat $FTRACE/trace
