@@ -52,6 +52,9 @@ case $1 in
 
 	"set-target")
 		echo $2 > $FTRACE/current_tracer
+		if [[ $2 != "nop" ]]; then
+			echo "" > $FTRACE/set_event
+		fi
 	;;
 
 	"get-target")
