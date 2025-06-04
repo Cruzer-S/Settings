@@ -17,11 +17,11 @@ echo "alias vim='lvim'" >> ~/.bashrc
 source ~/.bashrc
 
 # Install Nerd Font ( In this case, Noto (40) will installed )
-git clone https://github.com/ronniedroid/getnf.git
-./getnf/install.sh
-echo -e "40\n" | ./getnf/getnf
-rm -rf ./getnf
-fc-cache -f -v
+# git clone https://github.com/ronniedroid/getnf.git
+# ./getnf/install.sh
+# echo -e "40\n" | ./getnf/getnf
+# rm -rf ./getnf
+# fc-cache -f -v
 
 # FTPlugin Settings
 mkdir -p ~/.config/lvim/

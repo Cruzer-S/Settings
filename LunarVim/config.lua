@@ -14,16 +14,26 @@ lvim.keys.normal_mode["<S-l>"] = ":bnext<CR>"
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
-vim.opt.colorcolumn = '80'
+
 vim.opt.mouse = ''
 
--- folding powered by treesitter
--- https://github.com/nvim-treesitter/nvim-treesitter#folding
--- look for foldenable: https://github.com/neovim/neovim/blob/master/src/nvim/options.lua
--- Vim cheatsheet, look for folds keys: https://devhints.io/vim
-vim.opt.foldmethod = "expr" -- default is "normal"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- default is ""
-vim.opt.foldenable = false -- if this option is true and fold method option is other than normal, every time a document is opened everything will be folded.
+vim.opt.foldmethod = "manual"
+lvim.autocommands = {
+	{
+		"BufWinEnter", {
+			pattern = { "*.*" },
+			command = "silent! loadview"
+		}
+	},
+	{
+		"BufWinLeave", {
+			pattern = { "*.*" },
+			command = "mkview"
+		}
+	}
+}
+
+vim.opt.clipboard = 'unnamed'
 
 lvim.builtin.which_key.setup.plugins.presets.z = true
 
@@ -48,9 +58,29 @@ lvim.plugins = {
 			}
 	  end,
 	},
+	{
+  		"tpope/vim-fugitive",
+		cmd = {
+			"G",
+			"Git",
+			"Gdiffsplit",
+			"Gread",
+			"Gwrite",
+			"Ggrep",
+			"GMove",
+			"GDelete",
+			"GBrowse",
+			"GRemove",
+			"GRename",
+			"Glgrep",
+			"Gedit"
+		},
+  		ft = {"fugitive"}
+	},
 }
 
 lvim.keys.normal_mode["<Leader>r"] = "<Cmd>NvimTreeToggle<CR><Cmd>Outline<CR>"
+lvim.keys.normal_mode["<Leader>gB"] = "<Cmd>Git blame<CR>"
 --------------------------------------------------------------
 -- telescope settings
 --------------------------------------------------------------
