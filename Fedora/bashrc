@@ -5,3 +5,34 @@ alias rs="trash-restore"
 alias rl="trash-list"
 
 alias get-mk="wget https://raw.githubusercontent.com/Cruzer-S/generic-makefile/main/makefile"
+
+function format-patch() {
+        if (($# != 3)); then
+                echo "usage: format-patch <subject> <number> <commit>"
+                return 1
+        fi
+
+        git format-patch --subject-prefix="PATCH $1"                                \
+                                         $( (($2 != 0)) && echo --reroll-count=$2 ) $3
+}
+
+function send-patch() {
+        if (($# != 1)); then
+                echo "usage: send-patch <patch>"
+                return 1
+        fi
+
+        local MAINTAINER="$HOME/linux/kernel/scripts/get_maintainer.pl --separator=, --norolestats --nogit-fallback --nol"
+        local OPEN_LIST="$HOME/linux/kernel/scripts/get_maintainer.pl --separator=, --norolestats --nogit-fallback --nom"
+
+        git send-email --to-cmd="$MAINTAINER" --cc-cmd="$OPEN_LIST" $1
+}
+
+function check-patch() {
+        if (($# != 1)); then
+                echo "usage: check-patch <patch>"
+                return 1
+        fi
+
+        $HOME/linux/kernel/scripts/checkpatch.pl --strict --max-line-length=80 $1
+}
