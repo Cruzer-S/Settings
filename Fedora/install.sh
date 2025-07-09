@@ -7,6 +7,6 @@ sudo dnf install -y trash-cli
 cat bashrc >> ~/.bashrc
 source ~/.bashrc
 
-sudo cp aercbook /usr/bin/aercbook
+cp aercbook ~/.local/bin/aercbook
 
 ./gsettings.sh

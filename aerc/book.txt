@@ -1,0 +1,2 @@
+netdev-maintainer = Andrew Lunn <andrew@lunn.ch>, David S. Miller <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>
+netdev-openlist = netdev@vger.kernel.org, linux-kernel@vger.kernel.org

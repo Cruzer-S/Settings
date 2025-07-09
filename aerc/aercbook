@@ -1,0 +1,11 @@
+#!/bin/bash
+
+bookfile="$HOME/.config/aerc/book.txt"
+
+CHOICE=$(cut -d= -f1 "$bookfile" | fzf --prompt "Choose alias: ")
+[[ -z "$CHOICE" ]] && exit 1
+
+ADDR=$(grep "^$CHOICE\s*=" "$bookfile" | cut -d= -f2-)
+[[ -z "$ADDR" ]] && exit 1
+
+echo "$ADDR"

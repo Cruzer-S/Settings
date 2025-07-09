@@ -1,9 +1,0 @@
-#!/bin/bash
-case $1 in
-	"netdev-maintainer")
-		echo "Andrew Lunn <andrew+netdev@lunn.ch>, \"David S. Miller\" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>"
-	;;
-	"netdev-openlist")
-		echo "netdev@vger.kernel.org, linux-kernel@vger.kernel.org"
-	;;
-esac
