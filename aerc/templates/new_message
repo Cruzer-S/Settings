@@ -1,4 +1,4 @@
 From: {{.AccountFrom}}
-To: {{.To | persons | join ", "}}
-CC: {{.Cc | persons | join ", "}}
+To: {{.To | persons | join ",\n\t"}}
+CC: {{.Cc | persons | join ",\n\t"}}
 Subject: {{.Subject}}
